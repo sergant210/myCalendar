@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="mycalendar" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="mycalendar" version="1.1">
+
+<object class="myCalendarEvents" table="mycalendar" extends="xPDOSimpleObject">
+		<field key="title" dbtype="varchar" precision="40" phptype="string" null="false" />
+		<field key="description" dbtype="text" phptype="string" null="false" />
+		<field key="start" dbtype="datetime" phptype="datetime" null="true" />
+		<field key="end" dbtype="datetime" phptype="datetime" null="true" />
+		<field key="allDay" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+		<field key="properties" dbtype="text" phptype="string" null="true" />
+	</object>
+
+</model>
