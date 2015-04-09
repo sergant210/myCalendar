@@ -131,8 +131,6 @@ class myCalendar {
 		$query->setClassAlias('Events');
 		$select =  $this->modx->getSelectColumns('myCalendarEvents','Events');
 		$query->select($select);
-
-//die($this->config['showPrivate'].'!');
 		$data['start'] = date('Y-m-d H:i',strtotime($data['start']));
 		$data['end'] = date('Y-m-d H:i',strtotime($data['end']));
 		//Ограничение по периоду
@@ -142,7 +140,6 @@ class myCalendar {
 		if ($query->prepare() && $query->stmt->execute()) {
 			$allEvents = $query->stmt->fetchAll(PDO::FETCH_ASSOC);
 		}
-//die($query->toSQL());
 		$calendarEvents = array();
 		foreach ($allEvents as $event) {
 			if (!empty($event['properties'])) {
