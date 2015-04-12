@@ -77,7 +77,6 @@ $(document).ready(function() {
 		minTime: mcal_config.minTime,
 		maxTime: mcal_config.maxTime,
 		fixedWeekCount: mcal_config.fixedWeekCount,
-
 		/*
 		businessHours: {
 			start: '10:00',
@@ -85,7 +84,6 @@ $(document).ready(function() {
 			dow: [1, 2, 3, 4 ,5]
 		},
 		*/
-		//eventColor: 'red',
 		select: function(start, end, jsEvent, view ) {
 			var allDay = !$.fullCalendar.moment(end).hasTime();
 			//if (moment(end).hasTime()) alert(end);
@@ -126,8 +124,8 @@ $(document).ready(function() {
 		eventAfterRender: function(event, element, view) {
 			if (!event.google && mcal_config.editable) {
 				element.append('<a href="#" class="event-close-btn">&times;</a>');
-				event.calendarName = mcal_config.calendarName;
 			}
+			if (!event.google) event.calendarName = mcal_config.calendarName;
 			element.qtip({
 				overwrite: true,
 				solo: true,

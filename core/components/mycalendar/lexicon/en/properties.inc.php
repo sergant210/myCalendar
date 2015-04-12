@@ -1,6 +1,7 @@
 <?php
 
 $_lang['mycalendar_prop_allDaySlot'] = 'Determines if the "all-day" slot is displayed at the top of the calendar.';
+$_lang['mycalendar_prop_allowGuestEdit'] = 'Allows guests to edit events';
 $_lang['mycalendar_prop_axisFormat'] = 'Determines the time-text that will be displayed on the vertical axis of the agenda views.';
 $_lang['mycalendar_prop_defaultColor'] = 'Default color for a new event';
 $_lang['mycalendar_prop_defaultDuration'] = 'A fallback duration for timed Event Objects without a specified end value.';

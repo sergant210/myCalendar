@@ -7,6 +7,10 @@ $tmp = array(
 		'type' => 'combo-boolean',
 		'value' => true,
 	),
+	'allowGuestEdit' => array(
+		'type' => 'combo-boolean',
+		'value' => true,
+	),
 	'axisFormat' => array(
 		'type' => 'textfield',
 		'value' => 'H:mm',

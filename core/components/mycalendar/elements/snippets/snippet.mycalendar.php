@@ -19,6 +19,9 @@ if (empty($scriptProperties['maxTime'])) {
 $scriptProperties['axisFormat'] = $modx->quote($scriptProperties['axisFormat']);
 $scriptProperties['defaultView'] = $modx->quote($scriptProperties['defaultView']);
 
+if (!$scriptProperties['allowGuestEdit'] && !$modx->user->isAuthenticated($modx->context->get('key')))
+	$scriptProperties['readOnly'] = true;
+
 $_SESSION['mycalendar']['scriptProperties'] = $scriptProperties;
 
 /** @var myCalendar $myCalendar */

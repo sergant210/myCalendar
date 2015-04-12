@@ -69,10 +69,10 @@ class myCalendar {
 			$this->modx->regClientCSS($this->config['cssUrl'].'bootstrap.min.css');
 			$this->modx->regClientCSS($this->config['cssUrl'].'fullcalendar.min.css');
 			$this->modx->regClientCSS($this->config['cssUrl'].'jquery-ui.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'jquery.timepicker.css');
+			$this->modx->regClientCSS($this->config['cssUrl'].'jquery.timepicker.min.css');
 			$this->modx->regClientCSS($this->config['cssUrl'].'jquery.qtip.min.css');
 			$this->modx->regClientCSS($this->config['cssUrl'].'evol.colorpicker.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'default.css');
+			$this->modx->regClientCSS($this->config['cssUrl'].'default.min.css');
 			$config_js = preg_replace(array('/^\n/', '/\t{4}/'), '', '
 				var mcal_config = {
 					actionUrl: "'.$this->config['actionUrl'].'"
@@ -259,7 +259,7 @@ class myCalendar {
 				}
 				$end['hasTime'] = $end['time'] == '00:00' ? false : true;
 
-				if (!$event['allDay'] && !$start['hasTime'] && !$end['hasTime'] && !$this->$_allDaySlot) {
+				if (!$event['allDay'] && !$start['hasTime'] && !$end['hasTime'] && !$this->_allDaySlot) {
 					$event['allDay'] = true;
 				}
 				//Проверка на правильность конечной даты - не больше начальной
@@ -439,11 +439,11 @@ class myCalendar {
 	 */
 	protected function getTheme($color = '') {
 		switch ($color) {
-			case '#ffffff': case '#dbe5f1': case '#f2dcdb': case '#ebf1dd': case '#e5e0ec': case '#dbeef3': case '#fdeada': case '#d8d8d8':
-			case '#eeece1': case '#c4bd97': case '#8db3e2': case '#b8cce4': case '#f2f2f2': case '#e5b9b7': case '#ccc1d9': case '#b7dde8':
-			case '#fbd5b5': case '#bfbfbf': case '#938953': case '#548dd4': case '#95b3d7': case '#d99694': case '#c3d69b': case '#b2a2c7':
-			case '#ddd9c3': case '#c6d9f0': case '#00b0f0': case '#ffc000': case '#ffff00': case '#9bbb59': case '#4bacc6': case '#f79646':
-			case '#92d050': case '#a5a5a5': case '#7f7f7f': case '#fac08f':
+			case '#ffffff': case '#dbe5f1': case '#f2dcdb': case '#ebf1dd': case '#e5e0ec': case '#dbeef3': case '#fdeada':
+			case '#eeece1': case '#c4bd97': case '#8db3e2': case '#b8cce4': case '#f2f2f2': case '#e5b9b7': case '#ccc1d9':
+			case '#fbd5b5': case '#bfbfbf': case '#938953': case '#95b3d7': case '#d99694': case '#c3d69b': case '#b2a2c7':
+			case '#ddd9c3': case '#c6d9f0': case '#00b0f0': case '#ffc000': case '#ffff00': case '#9bbb59': case '#4bacc6':
+			case '#92d050': case '#a5a5a5': case '#7f7f7f': case '#fac08f': case '#f79646': case '#b7dde8': case '#d8d8d8':
 			$theme='light-theme';
 			break;
 			default:

@@ -1,5 +1,9 @@
 Changelog for myCalendar.
 
+1.0.1-pl
+==============
+- Add setting which allow guests to edit events.
+
 1.0.0-pl
 ==============
 - Initial release
