@@ -33,37 +33,20 @@ class myCalendar {
 			'corePath' => $corePath,
 			'modelPath' => $corePath.'model/'
 		),$config);
-		$this->config['editable'] = ($this->config['readOnly']) ? 'false' : 'true';
-		$this->config['googleCalendarApiKey'] = $this->modx->getOption('mycalendar.google_calendar_api_key', $config, '');
-		if (empty($this->config['defaultColor'])) $this->config['defaultColor'] ='#0070c0';
 
-		if (!empty($this->config['googleCalendars'])) {
-			$gcals = explode(',', $this->config['googleCalendars']);
-			$tmp = '[{';
-			foreach ($gcals as $k=>$gc) {
-				$tmp .= "googleCalendarId:'".$gc."'";
-				if (!empty($this->config['googleClass'])) $tmp .= ",className:'".$this->config['googleClass']."'";
-			}
-			$tmp .= '}]';
-			$this->config['googleCalendars'] = $tmp;
-		} else {
-			$this->config['googleCalendars'] = '[]';
-		}
-		if (empty($this->config['defaultDuration'])) {
-			$this->config['defaultDuration'] = "'00:30'";
-		} else {
-			$this->config['defaultDuration'] = $this->modx->quote($this->config['defaultDuration']);
-		}
 		$this->_allDaySlot = ($this->config['allDaySlot'] == 'false') ? false : true;
+		$this->config['googleCalendarApiKey'] = $this->modx->getOption('mycalendar.google_calendar_api_key', $config, '');
 		$this->modx->addPackage('mycalendar',$this->config['modelPath']);
 		$this->modx->lexicon->load('mycalendar:default');
 	}
 	/**
 	 * Initializes component.
+	 * @param string $ctx The context to load. Defaults to web.
+	 * @param array $properties
 	 * @return boolean
 	 */
-	public function initialize() {
-		if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
+	public function initialize($ctx = 'web',$properties = array()) {
+		if (empty($this->initialized[$ctx])) {
 			$buttons = '{add:"'.$this->modx->lexicon('mc.add').'",save:"'.$this->modx->lexicon('mc.save').'",delete:"'.$this->modx->lexicon('mc.delete').'",close:"'.$this->modx->lexicon('mc.close').'"}';
 			$str = '{newEvent:"'.$this->modx->lexicon('mc.newEvent').'",editEvent:"'.$this->modx->lexicon('mc.editEvent').'",colorString:"'.$this->modx->lexicon('mc.colorString').'",deleteEvent:"'.$this->modx->lexicon('mc.deleteEvent').'"}';
 			$this->modx->regClientCSS($this->config['cssUrl'].'bootstrap.min.css');
@@ -73,34 +56,15 @@ class myCalendar {
 			$this->modx->regClientCSS($this->config['cssUrl'].'jquery.qtip.min.css');
 			$this->modx->regClientCSS($this->config['cssUrl'].'evol.colorpicker.min.css');
 			$this->modx->regClientCSS($this->config['cssUrl'].'default.min.css');
-			$config_js = preg_replace(array('/^\n/', '/\t{4}/'), '', '
-				var mcal_config = {
-					actionUrl: "'.$this->config['actionUrl'].'"
-					,calendarName: "'.$this->modx->lexicon('mc.calendarName').'"
-					,buttons: '.$buttons.'
-					,str: '.$str.'
-					,defaultDuration: '.$this->config['defaultDuration'].'
-					,showWeekends: '.$this->config['showWeekends'].'
-					,showWeekNumber: '.$this->config['showWeekNumber'].'
-					,editable: '.$this->config['editable'].'
-					,height: '.$this->config['height'].'
-					,axisFormat: '.$this->config['axisFormat'].'
-					,allDaySlot: '.$this->config['allDaySlot'].'
-					,minTime: '.$this->config['minTime'].'
-					,maxTime: '.$this->config['maxTime'].'
-					,defaultView: '.$this->config['defaultView'].'
-					,fixedWeekCount: '.$this->config['fixedWeekCount'].'
+			$config_js = preg_replace(array('/^\n/', '/\t{4}/'), '', "
+				var mcal_config = [];
+				mcal_config['base'] = {
+					actionUrl: '".$this->config['actionUrl']."'
+					,calendarName: '".$this->modx->lexicon('mc.calendarName')."'
+					,buttons: ".$buttons.'
 					,googleCalendarApiKey: "'.$this->config['googleCalendarApiKey'].'"'.'
-					,googleCalendars: '.$this->config['googleCalendars']
+					,str: '.$str
 			);
-			/*
-			if (!empty($this->config['googleCalendarApiKey'])) {
-				$config_js .= "\n\t,googleCalendarApiKey: '".$this->config['googleCalendarApiKey']."'";
-				$config_js .= "\n\t,googleCalendars: ".$gcals;
-			}
-			*/
-			if (!empty($this->config['hiddenDays']))
-				$config_js .= "\n\t,hiddenDays: [".$this->config['hiddenDays'].']';
 			$config_js .= "\n};";
 			$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n".$config_js."\n</script>", true);
 			$this->modx->regClientScript(preg_replace(array('/^\n/', '/\t{5}/'), '', '
@@ -110,6 +74,9 @@ class myCalendar {
 						}
 					</script>
 					'), true);
+			$output = "<div class='event-modal' id='dialog'></div>\n";
+			$output .= "<div class=\"event-modal\" id=\"remove-dialog\">\n\t<p>Вы уверены?</p>\n</div>";
+			$this->modx->regClientHTMLBlock($output);
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/moment.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery-ui.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'fullcalendar.min.js');
@@ -119,6 +86,49 @@ class myCalendar {
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery.qtip.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/evol.colorpicker.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'default.js');
+			$this->initialized[$ctx] = true;
+		}
+		if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
+			$this->config = array_merge($this->config,$properties);
+			/** Prepare values */
+			$this->config['editable'] = ($this->config['readOnly']) ? 'false' : 'true';
+
+			if (!empty($this->config['googleCalendars'])) {
+				$gcals = explode(',', $this->config['googleCalendars']);
+				$tmp = '[{';
+				foreach ($gcals as $k=>$gc) {
+					$tmp .= "googleCalendarId:'".$gc."'";
+					if (!empty($this->config['googleClass'])) $tmp .= ",className:'".$this->config['googleClass']."'";
+				}
+				$tmp .= '}]';
+				$this->config['googleCalendars'] = $tmp;
+			} else {
+				$this->config['googleCalendars'] = '[]';
+			}
+			/** Process */
+			$config_js = preg_replace(array('/^\n/', '/\t{4}/'), '', "
+				mcal_config['{$this->config['instance']}'] = {
+					left: '".$this->config['left']."'
+					,center: '".$this->config['center']."'
+					,right: '".$this->config['right']."'
+					,defaultDuration: '".$this->config['defaultDuration']."'
+					,showWeekends: ".$this->config['showWeekends'].'
+					,showWeekNumber: '.$this->config['showWeekNumber'].'
+					,editable: '.$this->config['editable'].'
+					,height: '.$this->config['height']."
+					,axisFormat: '".$this->config['axisFormat']."'
+					,allDaySlot: ".$this->config['allDaySlot']."
+					,minTime: '".$this->config['minTime']."'
+					,maxTime: '".$this->config['maxTime']."'
+					,defaultView: '".$this->config['defaultView']."'
+					,fixedWeekCount: ".$this->config['fixedWeekCount'].'
+					,hiddenDays: ['.$this->config['hiddenDays'].']
+					,businessHours: {'.$this->config['businessHours'].'}
+					,googleCalendars: '.$this->config['googleCalendars']
+			);
+			$config_js .= "\n};";
+			$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n".$config_js."\n</script>", true);
+
 		}
 	}
 	/** Получает все события.
@@ -216,7 +226,7 @@ class myCalendar {
 	 * @return array
 	 */
 	public function saveEvent ($data = array()) {
-		if ($this->config['readOnly']) return $this->error('ReadOnly mode!');
+		if ($this->config['readOnly']) return $this->error($this->modx->lexicon('readOnly'));
 		$data = array_map('trim',$data);
 		$event = $output = array();
 		switch ($data['mode']) {
@@ -226,8 +236,6 @@ class myCalendar {
 				$res = $this->validateData($data);
 				if (!$res['success']) return $res;
 				$start = $end = array();
-				//todo Сделать через фукнцию
-				// $event = $this->prepareData($data);
 				$event['title'] = $this->modx->sanitizeString($data['title']);
 				$event['description'] = $this->modx->sanitizeString($data['description']);
 				$event['allDay'] = ($data['allDay'] == 'false') ? false : true;
@@ -259,7 +267,7 @@ class myCalendar {
 				}
 				$end['hasTime'] = $end['time'] == '00:00' ? false : true;
 
-				if (!$event['allDay'] && !$start['hasTime'] && !$end['hasTime'] && !$this->_allDaySlot) {
+				if (!$event['allDay'] && !$start['hasTime'] && !$end['hasTime'] && $this->_allDaySlot) {
 					$event['allDay'] = true;
 				}
 				//Проверка на правильность конечной даты - не больше начальной
@@ -465,7 +473,6 @@ class myCalendar {
 			'message' => $message,
 			'field' => $data
 		);
-
 		return $response;
 	}
 
@@ -481,7 +488,6 @@ class myCalendar {
 			'message' => $message,
 			'data' => $data
 		);
-
 		return $response;
 	}
 }

@@ -16,9 +16,14 @@ $modx->setLogTarget('FILE');
 $modx->error->message = null;
 
 $response = array('success' => false, 'message' =>'');
-
+if (!empty($_REQUEST['instance'])) {
+	$instance = filter_input(INPUT_POST, 'instance', FILTER_SANITIZE_SPECIAL_CHARS);
+} else {
+	$response['message'] = 'No instance is specified!';
+	exit($response);
+}
 /** @var myCalendar $myCalendar */
-$myCalendar = $modx->getService('mycalendar','myCalendar',MODX_CORE_PATH.'components/mycalendar/model/mycalendar/',$_SESSION['mycalendar']['scriptProperties']);
+$myCalendar = $modx->getService('mycalendar','myCalendar',MODX_CORE_PATH.'components/mycalendar/model/mycalendar/',$_SESSION['mycalendar'][$instance]['scriptProperties']);
 
 if (!($myCalendar instanceof myCalendar)) {
 	die($modx->toJSON(array('success' => false, 'message' =>'Error of class init!')));

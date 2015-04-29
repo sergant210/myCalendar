@@ -52,6 +52,10 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '',
 	),
+	'instance'=> array(
+		'type' => 'textfield',
+		'value' => 'mycalendar',
+	),
 	'maxTime' => array(
 		'type' => 'textfield',
 		'value' => '',
@@ -76,6 +80,23 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => 'tpl.myCalendar',
 	),
+	'left' => array(
+		'type' => 'textfield',
+		'value' => 'today,prev,next',
+	),
+	'center' => array(
+		'type' => 'textfield',
+		'value' => 'title',
+	),
+	'right' => array(
+		'type' => 'textfield',
+		'value' => 'month,agendaWeek,agendaDay',
+	),
+	'businessHours' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+
 );
 
 foreach ($tmp as $k => $v) {

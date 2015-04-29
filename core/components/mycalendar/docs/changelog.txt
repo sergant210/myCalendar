@@ -1,9 +1,18 @@
 Changelog for myCalendar.
 
+1.1.0-pl
+==============
+- [en] Enable multiple instances on the page.
+- [ru] Добавлена возможность вызывать несколько календарей.
+- [en] Add some properties to the snippet.
+- [ru] Добавлено несколько параметров для сниппета.
+
 1.0.1-pl
 ==============
-- Add setting which allow guests to edit events.
+- [en] Add the snippet property that disables guests to edit events.
+- [ru] Добавлен параметр сниппета, запрещающий неавторизованным пользователям редактировать события.
 
 1.0.0-pl
 ==============
-- Initial release
+- [en] Initial release.
+- [ru] Первый выпуск.

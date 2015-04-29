@@ -18,6 +18,7 @@ $_lang['mc.error_field'] = 'Заполните поле "[[+name]]"';
 $_lang['mc.incorrect_time_format'] = 'Некорректный формат времени!';
 $_lang['mc.no_id_event'] = 'Не указан ID события!';
 $_lang['mc.save_error'] = 'Не удалось сохранить событие!';
+$_lang['mc.read_only'] = 'Редактирование запрещено!';
 
 $_lang['mc.add'] = 'Добавить';
 $_lang['mc.save'] = 'Сохранить';

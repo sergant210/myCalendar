@@ -1,16 +1,7 @@
-.fc-view a, .fc-view a:focus {
-	color: #EFEFEF;
-}
-.fc-view a:hover {
-	color: #FFF;
-}
-
-.fc-title {
-	/*
-	text-decoration: underline;
-	font-weight: bold;
-	*/
-}
+.fc-view a, .fc-view a:focus {color: #EFEFEF;}
+.fc-view a:hover {color: #FFF;}
+.fc-more-cell a {color: #337ab7;}
+.fc-more-cell a:hover, .fc-more-cell a:focus {color: #23527c;}
 .fc-center h2 {
 	display: inline-block;
 	vertical-align: middle;

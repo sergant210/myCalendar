@@ -1,40 +1,29 @@
 <?php
+/** @var array $scriptProperties */
 $scriptProperties['showWeekNumber'] = !empty($scriptProperties['showWeekNumber']) ? 'true' : 'false';
 $scriptProperties['showWeekends'] = !empty($scriptProperties['showWeekends']) ? 'true' : 'false';
 $scriptProperties['allDaySlot'] = !empty($scriptProperties['allDaySlot']) ? 'true' : 'false';
 if ($scriptProperties['height'] == 'auto') $scriptProperties['height'] = "'auto'";
 $scriptProperties['readOnly'] = !empty($scriptProperties['readOnly']) ? true : false;
 $scriptProperties['fixedWeekCount'] = !empty($scriptProperties['fixedWeekCount']) ? 'true' : 'false';
-if (empty($scriptProperties['minTime'])) {
-	$scriptProperties['minTime'] = "'00:00'";
-} else {
-	$scriptProperties['minTime'] = $modx->quote($scriptProperties['minTime']);
-}
-if (empty($scriptProperties['maxTime'])) {
-	$scriptProperties['maxTime'] = "'24:00'";
-} else {
-	$scriptProperties['maxTime'] = $modx->quote($scriptProperties['maxTime']);
-}
 
-$scriptProperties['axisFormat'] = $modx->quote($scriptProperties['axisFormat']);
-$scriptProperties['defaultView'] = $modx->quote($scriptProperties['defaultView']);
+if (empty($minTime)) $scriptProperties['minTime'] = '00:00';
+if (empty($maxTime)) $scriptProperties['maxTime'] = '24:00';
+if (empty($defaultColor)) $scriptProperties['defaultColor'] ='#0070c0';
+if (empty($axisFormat)) $scriptProperties['axisFormat'] ='H:mm';
+if (empty($defaultDuration)) $scriptProperties['defaultDuration'] = '00:30';
+if (empty($tpl)) {$scriptProperties['tpl'] = 'tpl.myCalendar';}
+if (empty($ctx)) {$ctx = $modx->context->get('key');}
+if (empty($instance)) $instance = $scriptProperties['instance'] = 'mycalendar';
 
-if (!$scriptProperties['allowGuestEdit'] && !$modx->user->isAuthenticated($modx->context->get('key')))
+if (!$scriptProperties['allowGuestEdit'] && !$modx->user->isAuthenticated($ctx))
 	$scriptProperties['readOnly'] = true;
 
-$_SESSION['mycalendar']['scriptProperties'] = $scriptProperties;
+$_SESSION['mycalendar'][$instance]['scriptProperties'] = $scriptProperties;
 
 /** @var myCalendar $myCalendar */
 $myCalendar = $modx->getService('mycalendar','myCalendar',MODX_CORE_PATH.'components/mycalendar/model/mycalendar/',$scriptProperties);
-$myCalendar->initialize();
+$myCalendar->initialize($modx->context->get('key'),$scriptProperties);
+$output = "<div id=\"{$instance}\" class=\"mycalendar\"></div>";
 
-if (empty($tpl)) {$tpl = 'tpl.myCalendar';}
-$output = "<div id='calendar'></div>\n<div class='event-modal' id='dialog'></div>\n";
-if (!$scriptProperties['readOnly']) {
-	$output .= <<<DLG
-		<div class="event-modal" id="remove-dialog">
-			<p>Вы уверены?</p>
-		</div>\n
-DLG;
-}
 return $output;
