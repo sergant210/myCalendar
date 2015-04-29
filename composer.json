@@ -1,0 +1,8 @@
+{
+    "name": "sergant210/myCalendar",
+    "description": "Component for building custom schedule on MODX Revolution.",
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev"
+}
