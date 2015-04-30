@@ -1,6 +1,6 @@
 {
     "name": "sergant210/myCalendar",
-    "description": "Component for building custom schedule on MODX Revolution.",
+    "description": "A ModX Revolution component for event management using fullCalendar.",
     "config": {
         "preferred-install": "dist"
     },

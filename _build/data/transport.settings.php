@@ -8,6 +8,17 @@ $tmp = array(
 		'value' => '',
 		'area' => 'mycalendar.main',
 	),
+	'default_css' => array(
+		'xtype' => 'textfield',
+		'value' => 'default.min.css',
+		'area' => 'mycalendar.main',
+	),
+	'default_js' => array(
+		'xtype' => 'textfield',
+		'value' => 'default.js',
+		'area' => 'mycalendar.main',
+	),
+
 );
 
 foreach ($tmp as $k => $v) {

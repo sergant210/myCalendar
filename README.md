@@ -1,57 +1,26 @@
 ## myCalendar
 
-myCalendar is a base Extra template that is useful when wanting to create a new
-Extra for MODx Revolution. One can git archive from this repository to start
-with all the file structure for beginning MODx Extra development pre-setup.
+myCalendar is a component for ModX Revolution for event management using fullCalendar to render events.
 
-## How to Export
+## Basic Use
+For single use 
+    [[!myCalendar]]
+![myCalendar](https://file.modx.pro/files/a/1/3/a1355b1435283b29c0969d37db272c73s.jpg)
+if you want to use multiple calendars you must set the instance parameter  
+```
+[[!myCalendar? &instance=`calendar1`]]
+[[!myCalendar? &instance=`calendar2` &right=`` &left=`` &defaultView=`agendaDay`]]
+```
+![Multiple instance of myCalendar](https://file.modx.pro/files/b/4/4/b4429355714ff7121292321d174a554as.jpg)
 
-First, clone this repository somewhere on your development machine:
+## Settings
+- mycalendar.google_calendar_api_key - Google Calendar API key. How to get it read this [instruction](http://fullcalendar.io/docs/google_calendar/).
+- mycalendar.default_css - myCalendar css file. By default, default.min.css. It can be replaced by yours.
+- mycalendar.default_js - myCalendar js file. By default, default.js. It can be replaced by yours.
 
-`git clone http://github.com/splittingred/myCalendar.git ./`
+## Snippet properties
+All properties have detailed description. For more information see [fullCalendar doc](http://fullcalendar.io/docs/). 
 
-Then, create the target directory where you want to create the file.
-
-Then, navigate to the directory myCalendar is now in, and do this:
-
-`git archive HEAD | (cd /path/where/I/want/my/new/repo/ && tar -xvf -)`
-
-(Windows users can just do git archive HEAD and extract the tar file to wherever
-they want.)
-
-Then you can git init or whatever in that directory, and your files will be located
-there!
-
-## Configuration
-
-Now, you'll want to change references to myCalendar in the files in your
-new copied-from-myCalendar repo to whatever name of your new Extra will be. Once
-you've done that, you can create some System Settings:
-
-- 'mynamespace.core_path' - Point to /path/to/my/extra/core/components/extra/
-- 'mynamespace.assets_url' - /path/to/my/extra/assets/components/extra/
-
-Then clear the cache. This will tell the Extra to look for the files located
-in these directories, allowing you to develop outside of the MODx webroot!
-
-## Information
-
-Note that if you git archive from this repository, you may not need all of its
-functionality. This Extra contains files and the setup to do the following:
-
-- Integrates a custom table of "Items"
-- A snippet listing Items sorted by name and templated with a chunk
-- A custom manager page to manage Items on
-
-If you do not require all of this functionality, simply remove it and change the
-appropriate code.
-
-Also, you'll want to change all the references of 'myCalendar' to whatever the
-name of your component is.
-
-## Copyright Information
-
-myCalendar is distributed as GPL (as MODx Revolution is), but the copyright owner
-(Shaun McCormick) grants all users of myCalendar the ability to modify, distribute
-and use myCalendar in MODx development as they see fit, as long as attribution
-is given somewhere in the distributed source of all derivative works.
+##Bugs and improvements
+Feel free to suggest ideas/improvements/bugs on GitHub:
+http://github.com/sergant210/myCalendar/issues
