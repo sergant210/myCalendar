@@ -8,13 +8,12 @@ myCalendar is a component for ModX Revolution for event management using fullCal
 [[!myCalendar]]
 ```
 ![myCalendar](https://file.modx.pro/files/a/1/3/a1355b1435283b29c0969d37db272c73s.jpg)
-
 If you want to use multiple calendars you must set the instance parameter
 ```
 [[!myCalendar? &instance=`calendar1`]]
 [[!myCalendar? &instance=`calendar2` &right=`` &left=`` &defaultView=`agendaDay`]]
 ```
-![Multiple instance of myCalendar](https://file.modx.pro/files/b/4/4/b4429355714ff7121292321d174a554as.jpg)
+![Multiple instance of myCalendar](https://file.modx.pro/files/b/4/4/b4429355714ff7121292321d174a554a.png)
 
 ## Settings
 - mycalendar.google_calendar_api_key - Google Calendar API key. How to get it read this [instruction](http://fullcalendar.io/docs/google_calendar/).
