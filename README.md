@@ -3,12 +3,12 @@
 myCalendar is a component for ModX Revolution for event management using fullCalendar to render events.
 
 ## Basic Use
-####For single use 
+#####For single use 
 ```
 [[!myCalendar]]
 ```
 ![myCalendar](https://file.modx.pro/files/a/1/3/a1355b1435283b29c0969d37db272c73s.jpg)
-
+#####For multiple use 
 If you want to use multiple calendars you must set the instance parameter
 ```
 [[!myCalendar? &instance=`calendar1`]]
