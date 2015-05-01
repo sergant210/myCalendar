@@ -52,12 +52,8 @@ class myCalendar {
 
 			$default_css = trim($this->modx->getOption('mycalendar.default_css',$this->config,'default.min.css'));
 			$default_js = trim($this->modx->getOption('mycalendar.default_js',$this->config,'default.js'));
-			$this->modx->regClientCSS($this->config['cssUrl'].'bootstrap.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'fullcalendar.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'jquery-ui.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'jquery.timepicker.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'jquery.qtip.min.css');
-			$this->modx->regClientCSS($this->config['cssUrl'].'evol.colorpicker.min.css');
+			$cultureKey = trim($this->modx->getOption('cultureKey',null,'en'));
+
 			$this->modx->regClientCSS($this->config['cssUrl'].$default_css);
 			$config_js = preg_replace(array('/^\n/', '/\t{4}/'), '', "
 				var mcal_config = [];
@@ -83,7 +79,7 @@ class myCalendar {
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/moment.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery-ui.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'fullcalendar.min.js');
-			$this->modx->regClientScript($this->config['jsUrl'].'lang/ru.js');
+			$this->modx->regClientScript($this->config['jsUrl'].'lang/'.$cultureKey.'.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'gcal.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery.timepicker.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery.qtip.min.js');

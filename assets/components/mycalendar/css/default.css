@@ -1,3 +1,10 @@
+@import "bootstrap.min.css";
+@import "fullcalendar.min.css";
+@import "jquery-ui.min.css";
+@import "jquery.timepicker.min.css";
+@import "jquery.qtip.min.css";
+@import "evol.colorpicker.min.css";
+
 .fc-view a, .fc-view a:focus {color: #EFEFEF;}
 .fc-view a:hover {color: #FFF;}
 .fc-more-cell a {color: #337ab7;}
