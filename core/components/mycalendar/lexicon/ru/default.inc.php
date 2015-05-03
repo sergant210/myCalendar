@@ -19,6 +19,7 @@ $_lang['mc.incorrect_time_format'] = 'Некорректный формат вр
 $_lang['mc.no_id_event'] = 'Не указан ID события!';
 $_lang['mc.save_error'] = 'Не удалось сохранить событие!';
 $_lang['mc.read_only'] = 'Редактирование запрещено!';
+$_lang['mc.you_sure'] = 'Вы уверены?';
 
 $_lang['mc.add'] = 'Добавить';
 $_lang['mc.save'] = 'Сохранить';

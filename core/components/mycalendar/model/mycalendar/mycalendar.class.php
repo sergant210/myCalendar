@@ -74,7 +74,7 @@ class myCalendar {
 					</script>
 					'), true);
 			$output = "<div class='event-modal' id='dialog'></div>\n";
-			$output .= "<div class=\"event-modal\" id=\"remove-dialog\">\n\t<p>Вы уверены?</p>\n</div>";
+			$output .= "<div class=\"event-modal\" id=\"remove-dialog\">\n\t<p>".$this->modx->lexicon('mc.you_sure')."</p>\n</div>";
 			$this->modx->regClientHTMLBlock($output);
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/moment.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery-ui.min.js');

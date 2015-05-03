@@ -3,6 +3,8 @@ Changelog for myCalendar.
 1.1.1-pl
 - [en] Added the system settings for specifying default css and js files instead of original.
 - [ru] Добавлена системная настройка для замены базовых css и js файлов на свои.
+- [en] Added internalization.
+- [ru] Добавлена поддержка других языков.
 
 1.1.0-pl
 ==============

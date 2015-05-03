@@ -18,6 +18,7 @@ $_lang['mc.incorrect_time_format'] = 'Incorrent time format!';
 $_lang['mc.no_id_event'] = 'There is no event ID!';
 $_lang['mc.save_error'] = 'Error of saving event!';
 $_lang['mc.read_only'] = 'Editing is not allowed!';
+$_lang['mc.you_sure'] = 'Are you sure?';
 
 $_lang['mc.add'] = 'Add';
 $_lang['mc.save'] = 'Save';
