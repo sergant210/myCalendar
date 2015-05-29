@@ -1,6 +1,7 @@
 Changelog for myCalendar.
 
 1.1.2-pl
+==============
 - [en] Added Remove button to the dialog
 - [ru] В диалог редактирования добавлена кнопка "Удалить".
 - [en] Added description to the event popup window.
@@ -8,6 +9,7 @@ Changelog for myCalendar.
 
 
 1.1.1-pl
+==============
 - [en] Added the system settings for specifying default css and js files instead of original.
 - [ru] Добавлена системная настройка для замены базовых css и js файлов на свои.
 - [en] Fix some problem with internalization.
