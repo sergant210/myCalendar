@@ -1,16 +1,16 @@
 ## myCalendar
 
-myCalendar is a ModX Revolution component for event management using fullCalendar to render events.
+myCalendar is a ModX Revolution component for event management using fullCalendar to render events. myCalendar can display events from a public Google Calendar.
 
 ## Basic Use
-#####For single use 
+#####For single calling
 ```
 [[!myCalendar]]
 ```
 ![myCalendar](https://file.modx.pro/files/a/1/3/a1355b1435283b29c0969d37db272c73s.jpg)
 
-#####For multiple use 
-If you want to use multiple calendars you must set the instance parameter
+#####For multiple calling 
+You can call myCalendar multiple times. To do this you must set an instance parameter. Important, the instance does not show the different calendar, it shows the same events but with the other parameters.
 ```
 [[!myCalendar? &instance=`calendar1`]]
 [[!myCalendar? &instance=`calendar2` &right=`` &left=`` &defaultView=`agendaDay`]]
