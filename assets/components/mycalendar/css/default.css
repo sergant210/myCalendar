@@ -114,6 +114,9 @@
 .event-close-btn:hover {
 	text-decoration: none;
 }
+.ui-remove-event-button {
+	margin-right: 110px;
+}
 /********************************* Forms ******************************************/
 .form-group {
 	margin-bottom: 10px;

@@ -403,6 +403,7 @@ class myCalendar {
 	 */
 	public function removeEvent ($id = 0) {
 		if (empty($id)) return $this->error($this->modx->lexicon['mc.no_id_event']);
+		if (!$this->config['allowGuestEdit']) return $this->error($this->modx->lexicon('mc.read_only'));
 		/** @var myCalendarEvents $event */
 		$event = $this->modx->getObject('myCalendarEvents',$id);
 		if (is_object($event)) $event->remove();

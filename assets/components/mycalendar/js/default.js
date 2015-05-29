@@ -130,11 +130,11 @@ $(document).ready(function() {
 					solo: true,
 					content: {
 						title: event.calendarName,
-						text: event.title
+						text: '<p>'+event.title+'</p>'+event.description
 					},
 					position: {
-						my: 'bottom center',  // Position my top left...
-						at: 'top center', // at the bottom right of...
+						my: 'bottom center',
+						at: 'top center',
 						target: element
 					},
 					show: {
@@ -191,6 +191,17 @@ eventDialog = {
 			dlg_title = event.title;
 		} else {
 			buttons = [
+				{
+					text: mcal_config['base'].buttons.delete,
+					class:"ui-remove-event-button",
+					click: function () {
+						event.mode = "remove";
+						if (mcal_config[instance].editable) {
+							$(this).dialog("close");
+							Event.remove(event,instance);
+						}
+					}
+				},
 				{
 					text: mcal_config['base'].buttons.save,
 					class:"ui-edit-button",
