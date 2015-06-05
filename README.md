@@ -1,6 +1,7 @@
 ## myCalendar
 
-myCalendar is a ModX Revolution component for event management using fullCalendar to render events. myCalendar can display events from a public Google Calendar.
+myCalendar is a ModX Revolution component for event management using fullCalendar to render events.You can create, move, resize and remove events.  
+myCalendar can display events from a public Google Calendar.
 
 ## Basic Use
 #####For single calling
