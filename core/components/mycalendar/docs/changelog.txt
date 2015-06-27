@@ -1,8 +1,13 @@
 Changelog for myCalendar.
 
+1.1.3-pl
+==============
+- [en] Correct the removeEvent code.
+- [ru] Поправлено условие удаления события.
+
 1.1.2-pl
 ==============
-- [en] Added Remove button to the dialog
+- [en] Added Remove button to the dialog.
 - [ru] В диалог редактирования добавлена кнопка "Удалить".
 - [en] Added description to the event popup window.
 - [ru] Во всплывающее окошко добавлено описание события.
