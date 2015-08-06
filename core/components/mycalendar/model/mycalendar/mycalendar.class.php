@@ -36,6 +36,7 @@ class myCalendar {
 
 		$this->_allDaySlot = ($this->config['allDaySlot'] == 'false') ? false : true;
 		$this->config['googleCalendarApiKey'] = $this->modx->getOption('mycalendar.google_calendar_api_key', $config, '');
+		$this->config['class_key'] = $this->modx->getOption('mycalendar.class_key', $config, 'myCalendarEvents');
 		$this->modx->addPackage('mycalendar',$this->config['modelPath']);
 		$this->modx->lexicon->load('mycalendar:default');
 	}
@@ -136,9 +137,9 @@ class myCalendar {
 	 */
 	public function getEvents ($data = array()) {
 		$allEvents = array();
-		$query = $this->modx->newQuery('myCalendarEvents');
+		$query = $this->modx->newQuery($this->config['class_key']);
 		$query->setClassAlias('Events');
-		$select =  $this->modx->getSelectColumns('myCalendarEvents','Events');
+		$select =  $this->modx->getSelectColumns($this->config['class_key'],'Events');
 		$query->select($select);
 		$data['start'] = date('Y-m-d H:i',strtotime($data['start']));
 		$data['end'] = date('Y-m-d H:i',strtotime($data['end']));
@@ -185,9 +186,9 @@ class myCalendar {
 		$id = (int) $data['id'];
 		$res = $event = array();
 		if ($id != 0) {
-			$query = $this->modx->newQuery('myCalendarEvents');
+			$query = $this->modx->newQuery($this->config['class_key']);
 			$query->setClassAlias('Events');
-			$select =  $this->modx->getSelectColumns('myCalendarEvents','Events');
+			$select =  $this->modx->getSelectColumns($this->config['class_key'],'Events');
 			$query->select($select);
 			$query->where(array('Events.id'=>$id));
 			if ($query->prepare() && $query->stmt->execute()) {
@@ -286,9 +287,9 @@ class myCalendar {
 				// если пользователь не авторизован, то событие не может быть личным
 				/** @var myCalendarEvents $e  */
 				if ($data['mode'] == 'new') {
-					$e = $this->modx->newObject('myCalendarEvents');
+					$e = $this->modx->newObject($this->config['class_key']);
 				} else {
-					$e = $this->modx->getObject('myCalendarEvents',intval($data['id']));
+					$e = $this->modx->getObject($this->config['class_key'],intval($data['id']));
 				}
 				$e->fromArray($event);
 				if (!$e->save()) return $this->error($this->modx->lexicon('mc.save_error'));
@@ -299,7 +300,7 @@ class myCalendar {
 			case 'move':
 				/** @var myCalendarEvents $e  */
 				//print('<pre>');print_r($data);die();
-				$e = $this->modx->getObject('myCalendarEvents',intval($data['id']));
+				$e = $this->modx->getObject($this->config['class_key'],intval($data['id']));
 				$start = date('Y-m-d H:i',strtotime($data['start']));
 				if (isset($data['end'])) {
 					$end = date('Y-m-d H:i', strtotime($data['end']));
@@ -314,7 +315,7 @@ class myCalendar {
 				break;
 			case 'resize':
 				/** @var myCalendarEvents $e  */
-				$e = $this->modx->getObject('myCalendarEvents',intval($data['id']));
+				$e = $this->modx->getObject($this->config['class_key'],intval($data['id']));
 				$start = date('Y-m-d H:i',strtotime($data['start']));
 				$end = date('Y-m-d H:i',strtotime($data['end']));
 				$e->set('start',$start);
@@ -405,7 +406,7 @@ class myCalendar {
 		if (empty($id)) return $this->error($this->modx->lexicon['mc.no_id_event']);
 		if ($this->config['readOnly']) return $this->error($this->modx->lexicon('mc.read_only'));
 		/** @var myCalendarEvents $event */
-		$event = $this->modx->getObject('myCalendarEvents',$id);
+		$event = $this->modx->getObject($this->config['class_key'],$id);
 		if (is_object($event)) $event->remove();
 		return $this->success();
 	}

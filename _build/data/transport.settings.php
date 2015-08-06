@@ -18,7 +18,11 @@ $tmp = array(
 		'value' => 'default.js',
 		'area' => 'mycalendar.main',
 	),
-
+	'class_key' => array(
+		'xtype' => 'textfield',
+		'value' => 'myCalendarEvents',
+		'area' => 'mycalendar.main',
+	),
 );
 
 foreach ($tmp as $k => $v) {
