@@ -20,8 +20,8 @@ You can call myCalendar multiple times. To do this you must set an instance para
 
 ## Settings
 - mycalendar.google_calendar_api_key - Google Calendar API key. How to get it read this [instruction](http://fullcalendar.io/docs/google_calendar/).
-- mycalendar.default_css - myCalendar css file. By default, default.min.css. It can be replaced by yours.
-- mycalendar.default_js - myCalendar js file. By default, default.js. It can be replaced by yours.
+- mycalendar.default_css - myCalendar css file. By default, default.min.css. It can be replaced by yours or empty.
+- mycalendar.default_js - myCalendar js file. By default, default.js. It can be replaced by yours or empty.
 
 ## Snippet properties
 All properties have detailed description. For more information see [fullCalendar doc](http://fullcalendar.io/docs/). 

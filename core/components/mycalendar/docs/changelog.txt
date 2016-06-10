@@ -1,4 +1,7 @@
-Changelog for myCalendar.
+1.1.4-pl
+==============
+- [en] Update fullCalendar js library to 2.7.1.
+- [ru] Обновлена библиотека fullCalendar до версии 2.7.1.
 
 1.1.3-pl
 ==============

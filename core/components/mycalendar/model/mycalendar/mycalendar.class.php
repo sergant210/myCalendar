@@ -50,11 +50,11 @@ class myCalendar {
 			$buttons = '{add:"'.$this->modx->lexicon('mc.add').'",save:"'.$this->modx->lexicon('mc.save').'",delete:"'.$this->modx->lexicon('mc.delete').'",close:"'.$this->modx->lexicon('mc.close').'"}';
 			$str = '{newEvent:"'.$this->modx->lexicon('mc.newEvent').'",editEvent:"'.$this->modx->lexicon('mc.editEvent').'",colorString:"'.$this->modx->lexicon('mc.colorString').'",deleteEvent:"'.$this->modx->lexicon('mc.deleteEvent').'"}';
 
-			$default_css = trim($this->modx->getOption('mycalendar.default_css',$this->config,'default.min.css'));
-			$default_js = trim($this->modx->getOption('mycalendar.default_js',$this->config,'default.js'));
+			$default_css = trim($this->modx->getOption('mycalendar.default_css'));
+			$default_js = trim($this->modx->getOption('mycalendar.default_js'));
 			$cultureKey = trim($this->modx->getOption('cultureKey',null,'en'));
 
-			$this->modx->regClientCSS($this->config['cssUrl'].$default_css);
+			if ($default_css) $this->modx->regClientCSS($this->config['cssUrl'].$default_css);
 			$config_js = preg_replace(array('/^\n/', '/\t{4}/'), '', "
 				var mcal_config = [];
 				mcal_config['base'] = {
@@ -84,7 +84,7 @@ class myCalendar {
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery.timepicker.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/jquery.qtip.min.js');
 			$this->modx->regClientScript($this->config['jsUrl'].'lib/evol.colorpicker.min.js');
-			$this->modx->regClientScript($this->config['jsUrl'].$default_js);
+			if ($default_js) $this->modx->regClientScript($this->config['jsUrl'].$default_js);
 			$this->initialized[$ctx] = true;
 		}
 		if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
