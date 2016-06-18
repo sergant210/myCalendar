@@ -24,7 +24,9 @@ You can call myCalendar multiple times. To do this you must set an instance para
 - mycalendar.default_js - myCalendar js file. By default, default.js. It can be replaced by yours or empty.
 
 ## Snippet properties
-All properties have detailed description. For more information see [fullCalendar doc](http://fullcalendar.io/docs/). 
+All properties have detailed description. For more information see [fullCalendar doc](http://fullcalendar.io/docs/).   
+
+You can try it on [demo page](http://modzone.ru/mycalendar.html).  
 
 ##Bugs and improvements
 Feel free to suggest ideas/improvements/bugs on GitHub:
