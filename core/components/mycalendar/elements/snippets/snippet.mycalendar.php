@@ -3,6 +3,7 @@
 $scriptProperties['showWeekNumber'] = !empty($scriptProperties['showWeekNumber']) ? 'true' : 'false';
 $scriptProperties['showWeekends'] = !empty($scriptProperties['showWeekends']) ? 'true' : 'false';
 $scriptProperties['allDaySlot'] = !empty($scriptProperties['allDaySlot']) ? 'true' : 'false';
+$scriptProperties['showDialog'] = !empty($scriptProperties['showDialog']) ? 'true' : 'false';
 if ($scriptProperties['height'] == 'auto') $scriptProperties['height'] = "'auto'";
 $scriptProperties['readOnly'] = !empty($scriptProperties['readOnly']) ? true : false;
 $scriptProperties['fixedWeekCount'] = !empty($scriptProperties['fixedWeekCount']) ? 'true' : 'false';
@@ -22,7 +23,7 @@ if (!$scriptProperties['allowGuestEdit'] && !$modx->user->isAuthenticated($ctx))
 $_SESSION['mycalendar'][$instance]['scriptProperties'] = $scriptProperties;
 
 /** @var myCalendar $myCalendar */
-$myCalendar = $modx->getService('mycalendar','myCalendar',MODX_CORE_PATH.'components/mycalendar/model/mycalendar/',$scriptProperties);
+$myCalendar = $modx->getService('mycalendar','myCalendar',$modx->getOption('mycalendar.core_path', null, MODX_CORE_PATH . 'components/mycalendar/').'model/mycalendar/',$scriptProperties);
 $myCalendar->initialize($modx->context->get('key'),$scriptProperties);
 $output = "<div id=\"{$instance}\" class=\"mycalendar\"></div>";
 

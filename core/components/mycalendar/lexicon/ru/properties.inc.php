@@ -22,3 +22,6 @@ $_lang['mycalendar_prop_left'] = "Левая часть заголовка ка�
 $_lang['mycalendar_prop_center'] = "Центральная часть заголовка календаря.Например,'title'. Доступные значения: title,prev,next,prevYear,nextYear,today,month,agendaWeek,agendaDay.";
 $_lang['mycalendar_prop_right'] = "Правая часть заголовка календаря.Например,'month,agendaWeek,agendaDay'. Доступные значения: title,prev,next,prevYear,nextYear,today,month,agendaWeek,agendaDay.";
 $_lang['mycalendar_prop_businessHours'] = "Выделяет рабочие и нерабочие интервалы в календаре. Например, start:'10:00', end:'18:00', dow:[1,2,3,4,5].";
+$_lang['mycalendar_prop_showDialog'] = 'Показывать или нет диалог при клике на событие когда календарь в режиме "Только для чтения".';
+$_lang['mycalendar_prop_loadjQuery'] = 'Загружать jQuery.';
+$_lang['mycalendar_prop_loadjQueryUI'] = 'Загружать jQuery UI.';

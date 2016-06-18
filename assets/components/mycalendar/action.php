@@ -7,7 +7,12 @@ else {
 }
 
 define('MODX_API_MODE', true);
-require_once dirname(dirname(dirname(dirname(__FILE__)))).'/index.php';
+if (file_exists(dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php')) {
+    require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php';
+}
+else {
+    require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/index.php';
+}
 
 $modx->getService('error','error.modError');
 $modx->getRequest();
@@ -16,7 +21,7 @@ $modx->setLogTarget('FILE');
 $modx->error->message = null;
 
 $response = array('success' => false, 'message' =>'');
-if (!empty($_REQUEST['instance'])) {
+if (!empty($_POST['instance'])) {
 	$instance = filter_input(INPUT_POST, 'instance', FILTER_SANITIZE_SPECIAL_CHARS);
 } else {
 	$response['message'] = 'No instance is specified!';
@@ -31,13 +36,13 @@ if (!($myCalendar instanceof myCalendar)) {
 
 switch ($action) {
 	case 'getEvents':
-		$response = $myCalendar->getEvents($_REQUEST);
+		$response = $myCalendar->getEvents($_POST);
 		break;
 	case 'openDlg':
-		$response = $myCalendar->openDialog($_REQUEST);
+		$response = $myCalendar->openDialog($_POST);
 		break;
 	case 'saveEvent':
-		$response = $myCalendar->saveEvent($_REQUEST);
+		$response = $myCalendar->saveEvent($_POST);
 		break;
 	case 'removeEvent':
 		$response = $myCalendar->removeEvent(filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT));

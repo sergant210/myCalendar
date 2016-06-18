@@ -1,7 +1,15 @@
 1.1.4-pl
 ==============
-- [en] Update fullCalendar js library to 2.7.1.
-- [ru] Обновлена библиотека fullCalendar до версии 2.7.1.
+- [en] Update fullCalendar js library to 2.7.3.
+- [en] Added snippet property "showDialog" which defines to show or not the dialog in the not editable calendar when the event was clicked.
+- [en] Added snippet property "loadjQuery" which allows to disable the loading of jQuery.
+- [en] Added snippet property "loadjQueryUI" which allows to disable the loading of jQuery UI.
+- [en] Javascript code refactoring.
+- [ru] Обновлена библиотека fullCalendar до версии 2.7.3.
+- [ru] В сниппет добавлен параметр "showDialog", который определяет показывать или нет диалог при клике на событие когда календарь в режиме просмотра (read only).
+- [ru] В сниппет добавлен параметр "loadjQuery", который позволяет отключить загрузку jQuery.
+- [ru] В сниппет добавлен параметр "loadjQueryUI", который позволяет отключить загрузку jQuery UI.
+- [ru] В яваскрипт добавлено пространство имен.
 
 1.1.3-pl
 ==============
@@ -18,21 +26,21 @@
 
 1.1.1-pl
 ==============
-- [en] Added the system settings for specifying default css and js files instead of original.
+- [en] Added a system settings for specifying default css and js files instead of original.
 - [ru] Добавлена системная настройка для замены базовых css и js файлов на свои.
 - [en] Fix some problem with internalization.
 - [ru] Доработан механизм локализации.
 
 1.1.0-pl
 ==============
-- [en] Added the ability to call multiple instances on the page.
+- [en] Added an ability to call multiple instances on the page.
 - [ru] Добавлена возможность вызывать несколько календарей.
 - [en] Added some properties to the snippet.
 - [ru] Добавлено несколько параметров для сниппета.
 
 1.0.1-pl
 ==============
-- [en] Added the snippet property that disables guests to edit events.
+- [en] Added a snippet property that disables guests to edit events.
 - [ru] Добавлен параметр сниппета, запрещающий неавторизованным пользователям редактировать события.
 
 1.0.0-pl

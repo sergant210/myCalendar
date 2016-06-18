@@ -1,6 +1,5 @@
 @import "bootstrap.min.css";
 @import "fullcalendar.min.css";
-@import "jquery-ui.min.css";
 @import "jquery.timepicker.min.css";
 @import "jquery.qtip.min.css";
 @import "evol.colorpicker.min.css";
@@ -14,8 +13,8 @@
 	vertical-align: middle;
 	margin: 0 10px !important;
 }
-.fc-day-grid-event .fc-content {
-	margin-right: 17px;
+.fc-day-grid-event.fc-editable .fc-content {
+	margin-right: 20px;
 }
 .fc-ltr .fc-basic-view .fc-day-number {
 	font-size: 20px;
@@ -116,6 +115,9 @@
 }
 .ui-remove-event-button {
 	margin-right: 110px;
+}
+.ui-primary-button {
+	background: #dfeffc url("images/ui-bg_glass_70_1x400.png") !important;
 }
 /********************************* Forms ******************************************/
 .form-group {

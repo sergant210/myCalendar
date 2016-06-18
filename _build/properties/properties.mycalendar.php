@@ -68,6 +68,10 @@ $tmp = array(
 		'type' => 'combo-boolean',
 		'value' => false,
 	),
+    'showDialog' => array(
+        'type' => 'combo-boolean',
+        'value' => true,
+    ),
 	'showWeekNumber' => array(
 		'type' => 'combo-boolean',
 		'value' => false,
@@ -96,7 +100,14 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '',
 	),
-
+    'loadjQuery' => array(
+        'type' => 'combo-boolean',
+        'value' => true,
+    ),
+    'loadjQueryUI' => array(
+        'type' => 'combo-boolean',
+        'value' => true,
+    ),
 );
 
 foreach ($tmp as $k => $v) {

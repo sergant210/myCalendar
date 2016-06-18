@@ -22,3 +22,6 @@ $_lang['mycalendar_prop_left'] = "Defines the buttons and title at the left side
 $_lang['mycalendar_prop_center'] = "Defines the buttons and title at the center side of the top of the calendar. For example,'title'. Available values: title,prev,next,prevYear,nextYear,today,month,agendaWeek,agendaDay";
 $_lang['mycalendar_prop_right'] = "Defines the buttons and title at the right side of the top of the calendar. For example,'month,agendaWeek,agendaDay'. Available values: title,prev,next,prevYear,nextYear,today,month,agendaWeek,agendaDay";
 $_lang['mycalendar_prop_businessHours'] = "Emphasizes certain time slots on the calendar. For example, start:'10:00', end:'18:00', dow:[1,2,3,4,5]";
+$_lang['mycalendar_prop_showDialog'] = 'Defines to show or not the event dialog when it was clicked. It works when the calendar is in the read only mode.';
+$_lang['mycalendar_prop_loadjQuery'] = 'Load jQuery.';
+$_lang['mycalendar_prop_loadjQueryUI'] = 'Load jQuery UI.';

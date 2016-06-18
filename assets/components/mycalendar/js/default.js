@@ -1,12 +1,16 @@
-var Calendars = $('.mycalendar'),
-	Dialog = $('#dialog'),
-	dayClicked = false,
-	delClicked = false,
-	multiple =  Calendars.length > 1;
+var myCalendar = {
+		Calendars: $('.mycalendar'),
+		Dialog: $('#dialog'),
+		dayClicked: false,
+		delClicked: false,
+		Event: {},
+		eventDialog: {}
+		//multiple: this.Calendars.length > 1
+};
 
 $(document)
 	.on('mousedown', '.event-close-btn', function() {
-		delClicked = true;
+		myCalendar.delClicked = true;
 		return false;
 	})
 	.on('click', '.event-close-btn', function() {
@@ -28,7 +32,7 @@ $(document)
 	});
 /********************************************/
 $(document).ready(function() {
-	Calendars.each(function(i) {
+	myCalendar.Calendars.each(function(i) {
 		var instance = $(this).attr('id'),
 			eventSource = [{
 				url: mcal_config['base'].actionUrl,
@@ -47,6 +51,14 @@ $(document).ready(function() {
 			eventSource = eventSource.concat(mcal_config[instance].googleCalendars);
 
 		$(this).fullCalendar({
+			customButtons: {
+				events: {
+					text: 'Events',
+					click: function() {
+						alert('clicked the custom button!');
+					}
+				}
+			},
 			header: {
 				left: mcal_config[instance].left,
 				center: mcal_config[instance].center,
@@ -87,42 +99,44 @@ $(document).ready(function() {
 			select: function(start, end, jsEvent, view ) {
 				if (!mcal_config[instance].editable) return false;
 				var allDay = !$.fullCalendar.moment(end).hasTime();
-				if (dayClicked && !allDay) {
+				if (myCalendar.dayClicked && !allDay) {
 					var duration = moment.duration(mcal_config[instance].defaultDuration);
 					end = moment(start).add(duration);
-					dayClicked = false;
+					myCalendar.dayClicked = false;
 				}
 				var _event = {title: mcal_config['base'].str.newEvent, mode: "new", private: false, id: 0, allDay: allDay};
 				$.post( mcal_config['base'].actionUrl, {action: 'openDlg',id: 0, start: moment(start).format('YYYY-MM-DD HH:mm'), end: moment(end).format('YYYY-MM-DD HH:mm'), allDay: allDay, instance: instance} ,function( data ) {
-					Dialog.html(data);
-					eventDialog.open(_event, view, $(jsEvent.target).parents('.mycalendar'));
+					myCalendar.Dialog.html(data);
+					myCalendar.eventDialog.open(_event, view, $(jsEvent.target).parents('.mycalendar'));
 				});
 			},
 
 			googleCalendarApiKey: mcal_config['base'].googleCalendarApiKey,
 			dayClick: function() {
-				dayClicked = true;
+				myCalendar.dayClicked = true;
 			},
 			eventClick: function (event, jsEvent, view) {
 				if (!event.google) {
-					if (delClicked) {
-						delClicked = false;
+					if (myCalendar.delClicked) {
+						myCalendar.delClicked = false;
 						event.mode = "remove";
 						if (mcal_config[instance].editable) {
-							Event.remove(event,instance);
+							myCalendar.Event.remove(event,instance);
 						}
 						return false;
 					}
-					$.post(mcal_config['base'].actionUrl, {action: 'openDlg', id: event.id, instance: instance}, function (data) {
-						event.mode = "edit";
-						Dialog.html(data);
-						eventDialog.open(event, view, $(jsEvent.target).parents('.mycalendar'));
-					});
+					if (mcal_config[instance].editable || (!mcal_config[instance].editable && mcal_config[instance].showDialog)) {
+						$.post(mcal_config['base'].actionUrl, {action: 'openDlg', id: event.id, instance: instance}, function (data) {
+							event.mode = "edit";
+							myCalendar.Dialog.html(data);
+							myCalendar.eventDialog.open(event, view, $(jsEvent.target).parents('.mycalendar'));
+						});
+					}
 				}
 			},
 			eventAfterRender: function(event, element, view) {
 				if (!event.google && mcal_config[instance].editable) {
-					element.append('<a href="#" class="event-close-btn">&times;</a>');
+					element.append('<a href="#" class="event-close-btn">&times;</a>').addClass('fc-editable');
 				}
 				if (!event.google) event.calendarName = mcal_config['base'].calendarName;
 				element.qtip({
@@ -149,11 +163,11 @@ $(document).ready(function() {
 			},
 			eventDrop: function(event, delta, revertFunc) {
 				event.mode = 'move';
-				Event.change(event, revertFunc, instance);
+				myCalendar.Event.change(event, revertFunc, instance);
 			},
 			eventResize: function(event, delta, revertFunc) {
 				event.mode = 'resize';
-				Event.change(event, revertFunc, instance);
+				myCalendar.Event.change(event, revertFunc, instance);
 			},
 			eventRender: function( event, element, view ) {
 				event.description = event.description || '';
@@ -163,20 +177,20 @@ $(document).ready(function() {
 	});
 });
 
-eventDialog = {
+myCalendar.eventDialog = {
 	open : function(event, view, Calendar) {
 		var instance = Calendar.attr('id'),
 			buttons = {},
 			dlg_title = '';
-		eventDialog.init(instance);
+		myCalendar.eventDialog.init(instance);
 
 		if (event.mode == 'new') {
 			buttons = [
 				{
 					text: mcal_config['base'].buttons.add,
-					class:"ui-add-button",
+					class:"ui-add-button ui-state-hover",
 					click: function () {
-						Event.save(event,view,this,instance);
+						myCalendar.Event.save(event,view,this,instance);
 					}
 				},
 				{
@@ -190,37 +204,49 @@ eventDialog = {
 			];
 			dlg_title = event.title;
 		} else {
-			buttons = [
-				{
-					text: mcal_config['base'].buttons.delete,
-					class:"ui-remove-event-button",
-					click: function () {
-						event.mode = "remove";
-						if (mcal_config[instance].editable) {
+			if (!mcal_config[instance].editable) {
+				buttons = [
+					{
+						text: mcal_config['base'].buttons.close,
+						class: "ui-close-button",
+						click: function () {
 							$(this).dialog("close");
-							Event.remove(event,instance);
 						}
 					}
-				},
-				{
-					text: mcal_config['base'].buttons.save,
-					class:"ui-edit-button",
-					click: function () {
-						Event.save(event,view,this,instance);
+				];
+			} else {
+				buttons = [
+					{
+						text: mcal_config['base'].buttons.delete,
+						class: "ui-remove-event-button",
+						click: function () {
+							event.mode = "remove";
+							if (mcal_config[instance].editable) {
+								$(this).dialog("close");
+								myCalendar.Event.remove(event, instance);
+							}
+						}
+					},
+					{
+						text: mcal_config['base'].buttons.save,
+						class: "ui-edit-button  ui-state-hover ui-primary-button",
+						click: function () {
+							myCalendar.Event.save(event, view, this, instance);
+						}
+					},
+					{
+						text: mcal_config['base'].buttons.close,
+						class: "ui-close-button",
+						click: function () {
+							$(this).dialog("close");
+						}
 					}
-				},
-				{
-					text: mcal_config['base'].buttons.close,
-					class:"ui-close-button",
-					click: function () {
-						$(this).dialog("close");
-					}
-				}
-			];
+				];
+			}
 			dlg_title = mcal_config['base'].str.editEvent;
 		}
 		$('div.qtip').hide();
-		Dialog.dialog({
+		myCalendar.Dialog.dialog({
 			resizable: false,
 			modal: true,
 			title: dlg_title,
@@ -240,6 +266,7 @@ eventDialog = {
 		});
 		if (!mcal_config[instance].editable) {
 			$('.ui-edit-button').attr('disabled', 'disabled');
+			$('.ui-remove-event-button').attr('disabled', 'disabled');
 		}
 	},
 	init: function(instance) {
@@ -258,7 +285,7 @@ eventDialog = {
 	}
 };
 
-var Event = {
+myCalendar.Event = {
 	save: function (event, view, dialog, instance) {
 		var event_data = {
 			action: 'saveEvent',
@@ -287,13 +314,13 @@ var Event = {
 							event[prop] = res.data[prop];
 						}
 					}
-					Calendars.fullCalendar('unselect');
+					myCalendar.Calendars.fullCalendar('unselect');
 					if (event.mode == 'new') {
-						Calendars.fullCalendar('renderEvent', event);
+						myCalendar.Calendars.fullCalendar('renderEvent', event);
 					} else {
 						$('#'+instance).fullCalendar('updateEvent', event);
 						var _event;
-						Calendars.not('#'+instance).each(function(){
+						myCalendar.Calendars.not('#'+instance).each(function(){
 							_event = $(this).fullCalendar( 'clientEvents' ,event.id )[0];
 							if (typeof _event != 'undefined') {
 								for (var prop in event) {
@@ -303,7 +330,7 @@ var Event = {
 								}
 								$(this).fullCalendar('updateEvent', _event);
 							} else {
-								_event = Event.clone(event);
+								_event = myCalendar.Event.clone(event);
 								$(this).fullCalendar('renderEvent', _event);
 							}
 						});
@@ -342,7 +369,7 @@ var Event = {
 				if (res.success) {
 					$('#'+instance).fullCalendar('updateEvent', event);
 					var _event;
-					Calendars.not('#'+instance).each(function(){
+					myCalendar.Calendars.not('#'+instance).each(function(){
 						_event = $(this).fullCalendar( 'clientEvents' ,event.id )[0];
 						if (typeof _event != 'undefined') {
 							for (var prop in event) {
@@ -352,7 +379,7 @@ var Event = {
 							}
 							$(this).fullCalendar('updateEvent', _event);
 						} else {
-							_event = Event.clone(event);
+							_event = myCalendar.Event.clone(event);
 							$(this).fullCalendar('renderEvent', _event);
 						}
 					});
@@ -385,7 +412,7 @@ var Event = {
 						$(this).dialog("close");
 						$.post( mcal_config['base'].actionUrl, {action: 'removeEvent',id: event.id, instance: instance} ,function( res ) {
 							if (res.success) {
-								Calendars.fullCalendar('removeEvents', event.id);
+								myCalendar.Calendars.fullCalendar('removeEvents', event.id);
 							} else {
 								alert(res.message);
 							}
@@ -394,7 +421,7 @@ var Event = {
 				},
 				{
 					text: mcal_config['base'].buttons.close,
-					class:"ui-close-button",
+					class:"ui-close-button ui-state-hover ui-primary-button",
 					click: function () {
 						$(this).dialog("close");
 					}
