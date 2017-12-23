@@ -328,7 +328,7 @@ class myCalendar {
         $event_arr = $event->toArray();
         $properties = array();
         if (!empty($event_arr['properties'])) $properties = $this->modx->fromJSON($event_arr['properties']);
-        $output = '';
+        $output = array();
         foreach ($this->fields as $field) {
             if ($field == 'id') {
                 $output['id'] = $event->get('id');
